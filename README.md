@@ -1,5 +1,7 @@
-# React-Native-INTL-Phone-Input
-It's an international phone input with phone mask. 
+# dj-intl-phone-input
+It's an international phone input with phone mask.
+
+This library is forked from React-Native-INTL-Phone-Input
 
 ![](mgif.gif)
 
@@ -8,13 +10,13 @@ It's an international phone input with phone mask.
 
 install npm library
 ```
-npm install react-native-intl-phone-input
+yarn add dj-intl-phone-input
 ```
 
 
 İmport library
 ```
-import IntlPhoneInput from 'react-native-intl-phone-input';
+import IntlPhoneInput from 'dj-intl-phone-input';
 ```
 use component
 ```
