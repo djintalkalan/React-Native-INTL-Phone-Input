@@ -8,7 +8,7 @@ declare module "dj-intl-phone-input" {
         lang?: string,
         defaultCountry?: string,
         mask?: string,
-        onChangeText: (data: IOnChangeText) => void,
+        onChangeText?: (data: IOnChangeText) => void,
         customModal?: (modalVisible: boolean, countryData: any, onCountryChange: (code: string) => void) => FC,
         phoneInputStyle?: any, // {}
         containerStyle?: any, // {}
@@ -23,6 +23,7 @@ declare module "dj-intl-phone-input" {
         searchIconStyle?: any,
         disableCountryChange?: boolean,
         inputRef?: any,
+        maskPlaceholder?: boolean
         placeholderTextColor?: string,
         dialCode?: string,
         selectedPhone?: string

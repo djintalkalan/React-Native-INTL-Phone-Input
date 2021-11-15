@@ -10,6 +10,7 @@ interface IntlPhoneInputProps {
   customModal?: (modalVisible: boolean, countryData: any, onCountryChange: (code: string) => void) => FC,
   phoneInputStyle?: any, // {}
   containerStyle?: any, // {}
+  maskPlaceholder?: boolean
   dialCodeTextStyle?: any, // {}
   flagStyle?: any, // {}
   modalContainer?: any, // {}
@@ -275,7 +276,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
           {...inputProps}
           ref={this.props?.inputRef}
           style={[styles.phoneInputStyle, phoneInputStyle]}
-          placeholder={inputProps?.placeholder || this.state.mask.replace(/9/g, '_')}
+          placeholder={inputProps?.placeholder || (this.props?.maskPlaceholder ? this.state.mask.replace(/9/g, '_') : "")}
           autoCorrect={false}
           returnKeyLabel='Done'
           returnKeyType='done'
