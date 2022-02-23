@@ -1,6 +1,6 @@
 {
   "name": "dj-intl-phone-input",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "It is an international phone component.",
   "main": "index.js",
   "private": false,

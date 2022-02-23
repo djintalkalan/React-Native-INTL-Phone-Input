@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { ColorValue, FlatList, Keyboard, Modal, SafeAreaView, StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
-import data from './Countries';
+import countries from './Countries';
 
 interface IntlPhoneInputProps {
   lang?: string,
@@ -30,6 +30,8 @@ interface IntlPhoneInputProps {
   modalCountryItemCountryDialCodeStyle?: ViewStyle,
   renderAction?: () => void
   inputProps?: TextInputProps
+  extraCountries?: Array<ICountry>
+  disableDefaultCountries?: boolean
 }
 
 interface IOnChangeText {
@@ -63,19 +65,33 @@ interface ICountry {
   mask: string
 }
 
+let data = countries;
+
+const compare = (a: ICountry, b: ICountry, lang: string) => {
+  const aName = a[lang] || ""
+  const bName = b[lang] || ""
+  return aName < bName ? -1 : aName > bName ? 1 : 0;
+}
+
+let DEFAULT_COUNTRY = { ru: "Соединенные Штаты", lt: "Jungtinės Valstijos", tr: "Amerika Birleşik Devletleri", en: 'United States', flag: '🇺🇸', code: 'US', dialCode: '+1', mask: '(999) 999-9999' }
 
 export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps, IntlPhoneInputState> {
   constructor(props: IntlPhoneInputProps) {
     super(props);
     let defaultCountry
+    data = [...(props?.disableDefaultCountries && props?.extraCountries?.length ? [] : data), ...(props?.extraCountries ?? [])]?.sort((a, b) => compare(a, b, props?.lang || "en"))
+    DEFAULT_COUNTRY = data[0]
     if (props?.dialCode) {
       defaultCountry = data.filter((obj) => obj.dialCode == props.dialCode)[0] || data.filter((obj) => obj.dialCode === '+91')[0];
     } else {
       defaultCountry = data.filter((obj) => obj.code === props.defaultCountry)[0] || data.filter((obj) => obj.code === 'IN')[0];
     }
+    if (!defaultCountry) {
+      defaultCountry = DEFAULT_COUNTRY
+    }
     this.state = {
       defaultCountry,
-      flag: defaultCountry.flag,
+      flag: defaultCountry?.flag,
       modalVisible: false,
       dialCode: defaultCountry.dialCode,
       phoneNumber: props.selectedPhone,
@@ -91,7 +107,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
       this.setState({ phoneNumber: this.props.selectedPhone })
     }
     if (props.dialCode != this.props.dialCode) {
-      const defaultCountry = data.filter((obj) => obj.dialCode == this.props.dialCode)[0] || data.filter((obj) => obj.dialCode === '+91')[0];
+      const defaultCountry = (data.filter((obj) => obj.dialCode == this.props.dialCode)[0] || data.filter((obj) => obj.dialCode === '+91')?.[0]) ?? DEFAULT_COUNTRY;
       this.setState({
         defaultCountry,
         flag: defaultCountry.flag,
@@ -174,8 +190,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
   }
 
   filterCountries = (value) => {
-    const { lang
-    } = this.props;
+    const { lang } = this.props;
     const countryData = data.filter((obj) => (obj[lang?.toLowerCase() ?? "en"]?.indexOf(value) > -1 || obj.dialCode.indexOf(value) > -1));
     this.setState({ countryData });
   }

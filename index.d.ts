@@ -32,6 +32,8 @@ declare module "dj-intl-phone-input" {
         modalCountryItemCountryDialCodeStyle?: ViewStyle,
         renderAction?: () => void
         inputProps?: TextInputProps
+        extraCountries?: Array<ICountry>
+        disableDefaultCountries?: boolean
     }
 
     interface IOnChangeText {
