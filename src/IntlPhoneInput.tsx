@@ -7,7 +7,7 @@ interface IntlPhoneInputProps {
   defaultCountry?: string,
   mask?: string,
   onChangeText: (data: IOnChangeText) => void,
-  customModal?: (modalVisible: boolean, countryData: any, onCountryChange: (code: string) => void) => FC,
+  customModal?: (modalVisible: boolean, countryData: any, onCountryChange: (item: ICountry) => void) => FC,
   phoneInputStyle?: any, // {}
   containerStyle?: any, // {}
   maskPlaceholder?: boolean
@@ -163,12 +163,10 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
 
   showModal = () => (this.props.disableCountryChange ? null : this.setState({ modalVisible: true }));
 
-  hideModal = () => this.setState({ modalVisible: false });
+  hideModal = () => this.setState({ modalVisible: false, countryData: data });
 
-  onCountryChange = async (code) => {
-    const countryData = data;
+  onCountryChange = async (country: ICountry) => {
     try {
-      const country = countryData.filter((obj) => obj.code === code)[0];
       this.setState({
         dialCode: country.dialCode,
         flag: country.flag,
@@ -236,7 +234,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
               keyExtractor={(item, index) => index.toString()}
               renderItem={
                 ({ item }) => (
-                  <TouchableWithoutFeedback onPress={() => this.onCountryChange(item.code)}>
+                  <TouchableWithoutFeedback onPress={() => this.onCountryChange(item)}>
                     <View style={[styles.countryModalStyle, countryModalStyle]}>
                       <Text style={[styles.modalFlagStyle, modalFlagStyle]}>{item.flag}</Text>
                       <View style={styles.modalCountryItemContainer}>
