@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { FC } from 'react';
 import { ColorValue, FlatList, Keyboard, Modal, SafeAreaView, StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
 import countries from './Countries';
@@ -191,7 +192,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
   filterCountries = (value) => {
     const { lang } = this.props;
     const countryData = data.filter((obj) => (obj[lang?.toLowerCase() ?? "en"]?.indexOf(value) > -1 || obj.dialCode.indexOf(value) > -1));
-    this.setState({ countryData });
+    this.setState({ countryData: _.uniqBy(countryData, 'code') });
   }
 
   focus() {

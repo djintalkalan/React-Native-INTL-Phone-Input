@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/djintalkalan/React-Native-INTL-Phone-Input#readme",
   "peerDependencies": {
-    "react-native": ">= 0.25"
+    "react-native": ">= 0.25",
+    "lodash": "^4.7.0"
   }
 }
