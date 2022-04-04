@@ -82,9 +82,9 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
     data = [...(props?.disableDefaultCountries && props?.extraCountries?.length ? [] : data), ...(props?.extraCountries ?? [])]?.sort((a, b) => compare(a, b, props?.lang || "en"))
     DEFAULT_COUNTRY = data[0]
     if (props?.dialCode) {
-      defaultCountry = data.filter((obj) => obj.dialCode == props.dialCode)[0] || data.filter((obj) => obj.dialCode === '+91')[0];
+      defaultCountry = data.filter((obj) => obj.dialCode == props.dialCode)[0] || data.filter((obj) => obj.dialCode === '+1')[0];
     } else {
-      defaultCountry = data.filter((obj) => obj.code === props.defaultCountry)[0] || data.filter((obj) => obj.code === 'IN')[0];
+      defaultCountry = data.filter((obj) => obj.code === props.defaultCountry)[0] || data.filter((obj) => obj.code === 'US')[0];
     }
     if (!defaultCountry) {
       defaultCountry = DEFAULT_COUNTRY
@@ -106,8 +106,8 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
     if (props.selectedPhone != this.props.selectedPhone) {
       this.setState({ phoneNumber: this.props.selectedPhone })
     }
-    if (props.dialCode != this.props.dialCode) {
-      const defaultCountry = (data.filter((obj) => obj.dialCode == this.props.dialCode)[0] || data.filter((obj) => obj.dialCode === '+91')?.[0]) ?? DEFAULT_COUNTRY;
+    if (props?.dialCode != this.props?.dialCode || props?.defaultCountry != this.props?.defaultCountry) {
+      const defaultCountry = (data.filter((obj) => !this.props?.dialCode ? (obj?.code == this.props?.defaultCountry) : (obj?.dialCode == this.props?.dialCode))[0] || data.filter((obj) => obj.dialCode === '+1')?.[0]) ?? DEFAULT_COUNTRY;
       this.setState({
         defaultCountry,
         flag: defaultCountry.flag,
@@ -148,6 +148,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
     }
     let numberPointer = 0;
     for (let index = phoneNumber.length; index > 0; index -= 1) {
+      //@ts-ignore
       if (phoneNumber[index] !== ' ' && !isNaN(phoneNumber[index])) {
         numberPointer = index;
         break;
