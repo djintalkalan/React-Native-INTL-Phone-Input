@@ -33,6 +33,7 @@ interface IntlPhoneInputProps {
   inputProps?: TextInputProps
   extraCountries?: Array<ICountry>
   disableDefaultCountries?: boolean
+  sortBy: "lang" | 'code' | 'dialCode'
 }
 
 interface IOnChangeText {
@@ -80,7 +81,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
   constructor(props: IntlPhoneInputProps) {
     super(props);
     let defaultCountry
-    data = [...(props?.disableDefaultCountries && props?.extraCountries?.length ? [] : data), ...(props?.extraCountries ?? [])]?.sort((a, b) => compare(a, b, props?.lang || "en"))
+    data = [...(props?.disableDefaultCountries && props?.extraCountries?.length ? [] : data), ...(props?.extraCountries ?? [])]?.sort((a, b) => compare(a, b, !props?.sortBy ? "en" : props?.sortBy == 'lang' ? (props?.lang || "en") : props?.sortBy))
     DEFAULT_COUNTRY = data[0]
     if (props?.dialCode) {
       defaultCountry = data.filter((obj) => obj.dialCode == props.dialCode)[0] || data.filter((obj) => obj.dialCode === '+1')[0];
