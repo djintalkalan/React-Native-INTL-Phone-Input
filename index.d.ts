@@ -1,5 +1,5 @@
 import { Component, FC } from 'react';
-import { ColorValue, TextInputProps, ViewStyle } from 'react-native';
+import { ColorValue, StyleProp, TextInputProps, ViewStyle } from 'react-native';
 
 
 declare module "dj-intl-phone-input" {
@@ -14,7 +14,8 @@ declare module "dj-intl-phone-input" {
         containerStyle?: any, // {}
         dialCodeTextStyle?: any, // {}
         flagStyle?: any, // {}
-        modalContainer?: any, // {}
+        modalContainer?: StyleProp<ViewStyle>, // {}
+        filterInputStyleContainer?: StyleProp<ViewStyle>,
         filterInputStyle?: any, // {}
         closeButtonStyle?: any, // {}
         modalCountryItemCountryNameStyle?: any, // {}

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { FC } from 'react';
-import { ColorValue, FlatList, Keyboard, Modal, SafeAreaView, StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
+import { ColorValue, FlatList, Image, Keyboard, Modal, StyleProp, StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import countries from './Countries';
 
 interface IntlPhoneInputProps {
@@ -14,7 +15,8 @@ interface IntlPhoneInputProps {
   maskPlaceholder?: boolean
   dialCodeTextStyle?: any, // {}
   flagStyle?: any, // {}
-  modalContainer?: any, // {}
+  modalContainer?: StyleProp<ViewStyle>, // {}
+  filterInputStyleContainer?: StyleProp<ViewStyle>,
   filterInputStyle?: any, // {}
   closeButtonStyle?: any, // {}
   modalCountryItemCountryNameStyle?: any, // {}
@@ -205,6 +207,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
     const {
       countryModalStyle,
       modalContainer,
+      filterInputStyleContainer,
       modalFlagStyle,
       filterInputStyle,
       modalCountryItemCountryNameStyle,
@@ -219,9 +222,12 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
 
     return (
       <Modal animationType="slide" transparent={false} visible={this.state.modalVisible}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={[styles.modalContainer, modalContainer]}>
-            <View style={styles.filterInputStyleContainer}>
+            <View style={[styles.filterInputStyleContainer, filterInputStyleContainer]}>
+              <TouchableOpacity onPress={() => this.hideModal()} style={{ paddingHorizontal: 15, paddingVertical: 10 }} >
+                <Image style={{ height: 22, width: 12, resizeMode: 'contain', marginRight: 0 }} source={require('./ic_left.png')} />
+              </TouchableOpacity>
               <TextInput
                 autoFocus
                 onChangeText={this.filterCountries}
@@ -234,6 +240,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
             <FlatList
               style={{ flex: 1 }}
               data={this.state.countryData}
+              contentContainerStyle={{ paddingVertical: 15, paddingHorizontal: 15 }}
               keyExtractor={(item, index) => index.toString()}
               renderItem={
                 ({ item }) => (
@@ -250,9 +257,9 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
               }
             />
           </View>
-          <TouchableOpacity onPress={() => this.hideModal()} style={[styles.closeButtonStyle, closeButtonStyle]}>
+          {/* <TouchableOpacity onPress={() => this.hideModal()} style={[styles.closeButtonStyle, closeButtonStyle]}>
             <Text style={styles.closeTextStyle}>{closeText || 'CLOSE'}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </SafeAreaView>
       </Modal>
     );
@@ -317,7 +324,7 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 20,
     color: 'black',
-    fontWeight: 'bold'
+    fontWeight: '600'
   },
   modalCountryItemCountryDialCodeStyle: {
     fontSize: 15
@@ -329,16 +336,15 @@ const styles = StyleSheet.create({
   modalCountryItemContainer: {
     flex: 1,
     paddingLeft: 5,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   modalFlagStyle: {
-    fontSize: 25,
+    fontSize: 30,
+    marginRight: 7
   },
   modalContainer: {
-    paddingTop: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    flex: 10,
+    flex: 1,
     backgroundColor: 'white'
   },
   flagStyle: {
@@ -348,9 +354,9 @@ const styles = StyleSheet.create({
   },
   countryModalStyle: {
     flex: 1,
-    borderColor: 'black',
+    borderColor: '#f5f5f5',
     borderTopWidth: 1,
-    padding: 12,
+    padding: 11,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -363,16 +369,25 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: '#fff',
-    color: '#424242',
+    paddingLeft: 10,
+    paddingRight: 40,
+    marginEnd: 20,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    color: 'black',
+    // elevation: 3,
   },
   searchIcon: {
     padding: 10,
   },
   filterInputStyleContainer: {
     width: '100%',
+    marginEnd: 10,
     flexDirection: 'row',
     justifyContent: 'center',
+    marginVertical: 5,
+    elevation: 3,
+    backgroundColor: 'white',
     alignItems: 'center',
   },
   phoneInputStyle: {
@@ -389,8 +404,9 @@ const styles = StyleSheet.create({
   },
   searchIconStyle: {
     color: 'black',
-    fontSize: 15,
-    marginLeft: 15
+    fontSize: 16,
+    right: 35,
+    position: 'absolute'
   },
   buttonStyle: {
     alignItems: 'center',
@@ -410,7 +426,8 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   closeButtonStyle: {
-    padding: 12,
+    // padding: 12,
+    backgroundColor: 'red',
     alignItems: 'center',
   }
 });
