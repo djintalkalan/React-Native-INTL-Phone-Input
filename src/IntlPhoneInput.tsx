@@ -221,7 +221,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
     } = this.props;
 
     return (
-      <Modal animationType="slide" transparent={false} visible={this.state.modalVisible}>
+      <Modal onRequestClose={() => this.hideModal()} animationType="slide" transparent={false} visible={this.state.modalVisible}>
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={[styles.modalContainer, modalContainer]}>
             <View style={[styles.filterInputStyleContainer, filterInputStyleContainer]}>
