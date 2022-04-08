@@ -35,7 +35,7 @@ interface IntlPhoneInputProps {
   inputProps?: TextInputProps
   extraCountries?: Array<ICountry>
   disableDefaultCountries?: boolean
-  sortBy: "lang" | 'code' | 'dialCode'
+  sortBy?: "lang" | 'code' | 'dialCode'
 }
 
 interface IOnChangeText {
@@ -299,7 +299,7 @@ export default class IntlPhoneInput extends React.Component<IntlPhoneInputProps,
           {...inputProps}
           ref={this.props?.inputRef}
           style={[styles.phoneInputStyle, phoneInputStyle]}
-          placeholder={inputProps?.placeholder || (this.props?.maskPlaceholder ? this.state.mask.replace(/9/g, '_') : "")}
+          placeholder={inputProps?.placeholder || (this.props?.maskPlaceholder ? this.state.mask.replace(/9/g, '#') : "")}
           autoCorrect={false}
           returnKeyLabel='Done'
           returnKeyType='done'

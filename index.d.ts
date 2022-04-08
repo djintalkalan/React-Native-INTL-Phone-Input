@@ -35,7 +35,7 @@ declare module "dj-intl-phone-input" {
         inputProps?: TextInputProps
         extraCountries?: Array<ICountry>
         disableDefaultCountries?: boolean
-        sortBy: "lang" | 'code' | 'dialCode'
+        sortBy?: "lang" | 'code' | 'dialCode'
     }
 
     interface IOnChangeText {
