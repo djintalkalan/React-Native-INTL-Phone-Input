@@ -171,7 +171,10 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
 
   showModal = () => this.setState({ modalVisible: true });
 
-  hideModal = () => this.setState({ modalVisible: false });
+  hideModal = () => {
+    this.data = [...data]
+    this.setState({ modalVisible: false })
+  };
 
   onCountryChange = async (country: ICountry) => {
     //   if (dialCode.includes('+1')) {
@@ -212,7 +215,7 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
       this.setState({ isFilter: true });
     } else {
       this.data = [...data]
-      this.setState({ isFilter: true });
+      this.setState({ isFilter: false });
     }
   }
 
@@ -255,6 +258,7 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
             <FlatList
               style={{ flex: 1 }}
               data={this.data}
+              keyboardShouldPersistTaps={'always'}
               contentContainerStyle={{ paddingVertical: 15, paddingHorizontal: 15 }}
               keyExtractor={(item, index) => index.toString()}
               renderItem={
