@@ -136,6 +136,10 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
     if (this?.state?.selectedCountry?.fixedValue) {
       if (value?.length <= (this?.state?.selectedCountry?.fixedValue ?? "")?.length) {
         unmaskedPhoneNumber = this?.state?.selectedCountry?.fixedValue ?? ""
+      } else {
+        if (!unmaskedPhoneNumber?.startsWith(this?.state?.selectedCountry?.fixedValue ?? "")) {
+          return
+        }
       }
     }
 
@@ -336,11 +340,13 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   modalCountryItemCountryDialCodeStyle: {
-    fontSize: 15
+    fontSize: 15,
+    color: '#061D32'
   },
   modalCountryItemCountryNameStyle: {
     flex: 1,
-    fontSize: 15
+    fontSize: 15,
+    color: '#061D32'
   },
   modalCountryItemContainer: {
     flex: 1,
@@ -350,7 +356,8 @@ const styles = StyleSheet.create({
   },
   modalFlagStyle: {
     fontSize: 30,
-    marginRight: 7
+    marginRight: 7,
+    color: 'black'
   },
   modalContainer: {
     flex: 1,
@@ -358,8 +365,10 @@ const styles = StyleSheet.create({
   },
   flagStyle: {
     fontSize: 35,
+    color: "black"
   },
   dialCodeTextStyle: {
+    color: "#061D32"
   },
   countryModalStyle: {
     flex: 1,
