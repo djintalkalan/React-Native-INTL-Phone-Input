@@ -1,3 +1,6 @@
+import {
+  isValidPhoneNumber
+} from 'libphonenumber-js';
 import _ from 'lodash';
 import React from 'react';
 import { ColorValue, FlatList, Image, Keyboard, Modal, StyleProp, StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
@@ -122,7 +125,11 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
     const { dialCode, mask, selectedCountry, } = this.state;
     const countOfNumber = mask?.match(/9/g)?.length;
     if (this.props.onChangeText) {
-      let isVerified = countOfNumber === unmaskedPhoneNumber?.length && phoneNumber?.length > 0;
+      //@ts-ignore
+      let isVerified = isValidPhoneNumber(phoneNumber, (selectedCountry?.code?.[0] + selectedCountry?.code?.[1]))
+      //@ts-ignore
+      // const isValidLength = validatePhoneNumberLength(phoneNumber, (selectedCountry?.code?.[0] + selectedCountry?.code?.[1]))
+      // let isVerified = countOfNumber === unmaskedPhoneNumber?.length && phoneNumber?.length > 0;
       if (this.state.selectedCountry?.fixedValue && unmaskedPhoneNumber == this.state.selectedCountry?.fixedValue) {
         isVerified = true
         phoneNumber = phoneNumber + ")"
