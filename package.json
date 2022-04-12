@@ -1,6 +1,6 @@
 {
   "name": "dj-intl-phone-input",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "It is an international phone component.",
   "main": "index.js",
   "private": false,
@@ -35,9 +35,9 @@
   },
   "homepage": "https://github.com/djintalkalan/React-Native-INTL-Phone-Input#readme",
   "peerDependencies": {
+    "libphonenumber-js": "^1.9.51",
     "lodash": "^4.7.0",
     "react-native": ">= 0.25",
-    "react-native-safe-area-context": "^3.3.2",
-    "libphonenumber-js": "^1.9.51"
+    "react-native-safe-area-context": "^3.3.2"
   }
 }
