@@ -35,9 +35,14 @@
   },
   "homepage": "https://github.com/djintalkalan/React-Native-INTL-Phone-Input#readme",
   "peerDependencies": {
+    "react-native": ">= 0.25"
+  },
+  "dependencies": {
     "libphonenumber-js": "^1.9.51",
-    "lodash": "^4.7.0",
-    "react-native": ">= 0.25",
-    "react-native-safe-area-context": "^3.3.2"
+    "lodash": "^4.17.19",
+    "react-native-safe-area-context": "^3.4.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.170"
   }
 }
