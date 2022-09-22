@@ -4,7 +4,7 @@ import {
 import _ from 'lodash';
 import React from 'react';
 import { ColorValue, FlatList, Image, Keyboard, Modal, StyleProp, StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import countries, { ICountry } from './Countries';
 
 export interface NewIntlPhoneInputProps {
@@ -251,47 +251,49 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
 
     return (
       <Modal onRequestClose={() => this.hideModal()} animationType="slide" transparent={false} visible={this.state.modalVisible}>
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-          <View style={[styles.modalContainer, modalContainer]}>
-            <View style={[styles.filterInputStyleContainer, filterInputStyleContainer]}>
-              <TouchableOpacity onPress={() => this.hideModal()} style={{ paddingHorizontal: 15, paddingVertical: 10 }} >
-                <Image style={{ height: 22, width: 12, resizeMode: 'contain', marginRight: 0 }} source={require('./ic_left.png')} />
-              </TouchableOpacity>
-              <TextInput
-                autoFocus
-                onChangeText={this.filterCountries}
-                placeholder={filterText || 'Filter'}
-                style={[styles.filterInputStyle, filterInputStyle]}
-                placeholderTextColor={placeholderTextColor}
-              />
-              <Text style={[styles.searchIconStyle, searchIconStyle]}>🔍</Text>
-            </View>
-            <FlatList
-              style={{ flex: 1 }}
-              data={this.data}
-              keyboardShouldPersistTaps={'always'}
-              contentContainerStyle={{ paddingVertical: 15, paddingHorizontal: 15 }}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={
-                ({ item }) => (
-                  <TouchableWithoutFeedback onPress={() => this.onCountryChange(item)}>
-                    <View style={[styles.countryModalStyle, countryModalStyle]}>
-                      <Text style={[styles.modalFlagStyle, modalFlagStyle]}>{item.flag}</Text>
-                      <View style={styles.modalCountryItemContainer}>
-                        {/** @ts-ignore */}
-                        <Text style={[styles.modalCountryItemCountryNameStyle, modalCountryItemCountryNameStyle]}>{item[lang?.toLowerCase() ?? "en"]}</Text>
-                        <Text style={[styles.modalCountryItemCountryDialCodeStyle, modalCountryItemCountryDialCodeStyle]}>{`  ${item.dialCode}`}</Text>
+        <SafeAreaProvider>
+          <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <View style={[styles.modalContainer, modalContainer]}>
+              <View style={[styles.filterInputStyleContainer, filterInputStyleContainer]}>
+                <TouchableOpacity onPress={() => this.hideModal()} style={{ paddingHorizontal: 15, paddingVertical: 10 }} >
+                  <Image style={{ height: 22, width: 12, resizeMode: 'contain', marginRight: 0 }} source={require('./ic_left.png')} />
+                </TouchableOpacity>
+                <TextInput
+                  autoFocus
+                  onChangeText={this.filterCountries}
+                  placeholder={filterText || 'Filter'}
+                  style={[styles.filterInputStyle, filterInputStyle]}
+                  placeholderTextColor={placeholderTextColor}
+                />
+                <Text style={[styles.searchIconStyle, searchIconStyle]}>🔍</Text>
+              </View>
+              <FlatList
+                style={{ flex: 1 }}
+                data={this.data}
+                keyboardShouldPersistTaps={'always'}
+                contentContainerStyle={{ paddingVertical: 15, paddingHorizontal: 15 }}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={
+                  ({ item }) => (
+                    <TouchableWithoutFeedback onPress={() => this.onCountryChange(item)}>
+                      <View style={[styles.countryModalStyle, countryModalStyle]}>
+                        <Text style={[styles.modalFlagStyle, modalFlagStyle]}>{item.flag}</Text>
+                        <View style={styles.modalCountryItemContainer}>
+                          {/** @ts-ignore */}
+                          <Text style={[styles.modalCountryItemCountryNameStyle, modalCountryItemCountryNameStyle]}>{item[lang?.toLowerCase() ?? "en"]}</Text>
+                          <Text style={[styles.modalCountryItemCountryDialCodeStyle, modalCountryItemCountryDialCodeStyle]}>{`  ${item.dialCode}`}</Text>
+                        </View>
                       </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
-            />
-          </View>
-          {/* <TouchableOpacity onPress={() => this.hideModal()} style={[styles.closeButtonStyle, closeButtonStyle]}>
+                    </TouchableWithoutFeedback>
+                  )
+                }
+              />
+            </View>
+            {/* <TouchableOpacity onPress={() => this.hideModal()} style={[styles.closeButtonStyle, closeButtonStyle]}>
             <Text style={styles.closeTextStyle}>{closeText || 'CLOSE'}</Text>
           </TouchableOpacity> */}
-        </SafeAreaView>
+          </SafeAreaView>
+        </SafeAreaProvider>
       </Modal>
     );
   }
