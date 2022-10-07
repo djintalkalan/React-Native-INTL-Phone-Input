@@ -246,7 +246,8 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
       filterText,
       searchIconStyle,
       lang,
-      placeholderTextColor
+      placeholderTextColor,
+      onSubmitEditing = () => null
     } = this.props;
 
     return (
@@ -327,7 +328,10 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
           autoCorrect={false}
           returnKeyLabel='Done'
           returnKeyType='done'
-          onSubmitEditing={Keyboard.dismiss}
+          onSubmitEditing={() => {
+            Keyboard.dismiss
+            onSubmitEditing()
+          }}
           keyboardType="number-pad"
           secureTextEntry={false}
           value={this.state.phoneNumber}
