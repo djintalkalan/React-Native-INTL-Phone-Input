@@ -246,8 +246,7 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
       filterText,
       searchIconStyle,
       lang,
-      placeholderTextColor,
-      onSubmitEditing = () => null
+      placeholderTextColor
     } = this.props;
 
     return (
@@ -309,7 +308,8 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
       phoneInputStyle,
       dialCodeTextStyle,
       inputProps,
-      placeholderTextColor
+      placeholderTextColor,
+      onSubmitEditing = () => null
     } = this.props;
     return (
       <View style={{ ...styles.container, ...containerStyle }}>
