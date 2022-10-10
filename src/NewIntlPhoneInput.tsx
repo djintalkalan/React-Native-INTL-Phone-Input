@@ -15,9 +15,6 @@ export interface NewIntlPhoneInputProps {
   onChangeText?: (data: IOnChangeText) => void
   inputRef?: any,
   onChangeCountry?: (c: ICountry) => void
-
-
-
   phoneInputStyle?: any, // {}
   containerStyle?: any, // {}
   maskPlaceholder?: boolean
@@ -175,10 +172,7 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
 
     this.onChangePropText(unmaskedPhoneNumber, phoneNumber);
 
-
-    // this.setState({ phoneNumber });
   }
-
 
   showModal = () => this.setState({ modalVisible: true });
 
@@ -298,8 +292,6 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
     );
   }
 
-
-
   render() {
     const { flag } = this.state;
     const {
@@ -337,8 +329,6 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
           placeholderTextColor={placeholderTextColor}
         />
       </View>
-
-
     );
   }
 }
