@@ -326,8 +326,6 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
           style={[styles.phoneInputStyle, phoneInputStyle]}
           placeholder={inputProps?.placeholder || (this.props?.maskPlaceholder ? this.state.mask.replace(/9/g, '#') : "")}
           autoCorrect={false}
-          returnKeyLabel='Done'
-          returnKeyType='done'
           onSubmitEditing={() => {
             Keyboard.dismiss
             onSubmitEditing()
