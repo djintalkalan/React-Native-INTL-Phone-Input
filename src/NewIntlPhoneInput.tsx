@@ -15,9 +15,6 @@ export interface NewIntlPhoneInputProps {
   onChangeText?: (data: IOnChangeText) => void
   inputRef?: any,
   onChangeCountry?: (c: ICountry) => void
-
-
-
   phoneInputStyle?: any, // {}
   containerStyle?: any, // {}
   maskPlaceholder?: boolean
@@ -175,10 +172,7 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
 
     this.onChangePropText(unmaskedPhoneNumber, phoneNumber);
 
-
-    // this.setState({ phoneNumber });
   }
-
 
   showModal = () => this.setState({ modalVisible: true });
 
@@ -298,8 +292,6 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
     );
   }
 
-
-
   render() {
     const { flag } = this.state;
     const {
@@ -308,7 +300,8 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
       phoneInputStyle,
       dialCodeTextStyle,
       inputProps,
-      placeholderTextColor
+      placeholderTextColor,
+      onSubmitEditing = () => null
     } = this.props;
     return (
       <View style={{ ...styles.container, ...containerStyle }}>
@@ -325,9 +318,10 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
           style={[styles.phoneInputStyle, phoneInputStyle]}
           placeholder={inputProps?.placeholder || (this.props?.maskPlaceholder ? this.state.mask.replace(/9/g, '#') : "")}
           autoCorrect={false}
-          returnKeyLabel='Done'
-          returnKeyType='done'
-          onSubmitEditing={Keyboard.dismiss}
+          onSubmitEditing={() => {
+            Keyboard.dismiss
+            onSubmitEditing()
+          }}
           keyboardType="number-pad"
           secureTextEntry={false}
           value={this.state.phoneNumber}
@@ -335,8 +329,6 @@ export class IntlPhoneInput extends React.Component<NewIntlPhoneInputProps, Intl
           placeholderTextColor={placeholderTextColor}
         />
       </View>
-
-
     );
   }
 }
